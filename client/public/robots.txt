@@ -1,0 +1,35 @@
+# -------------------------------------------------- #
+# robots.txt for the NET Team Official Website
+# Rule: Be open and crawlable for good SEO
+# -------------------------------------------------- #
+
+# This specifies the User-agent. The asterisk (*) means this rule applies to all web robots.
+User-agent: *
+
+# --- Allowed Sections ---
+# By default, everything is allowed. There is no need for an "Allow" directive
+# for the main pages like /, /about, /services, etc.
+
+# --- Disallowed Sections ---
+# This tells robots not to crawl specific paths. This is useful for preventing
+# them from indexing pages that are not for public consumption.
+
+# Disallow access to authentication pages. We don't want "Login" or "Register"
+# showing up as primary results in Google.
+Disallow: /login
+Disallow: /register
+
+# Disallow access to a user's private dashboard. The content is user-specific
+# and should not be indexed by search engines.
+Disallow: /dashboard
+
+# Example of what else you might disallow in a larger application:
+# Disallow: /admin/
+# Disallow: /api/
+# Disallow: /cart/
+
+# --- Sitemap ---
+# This is a very important line. It tells search engines where to find a complete
+# map of your site, which helps them discover and index all your important pages efficiently.
+# Replace "https://www.your-net-team-domain.com" with your actual domain once you deploy.
+Sitemap: https://www.your-net-team-domain.com/sitemap.xml

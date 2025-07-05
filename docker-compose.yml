@@ -1,0 +1,47 @@
+
+services:
+  # --- Backend Server Service ---
+  server:
+    build:
+      context: ./server
+      target: deps # Use the 'deps' stage for dev dependencies
+    command: npm run dev # Use nodemon for hot-reloading
+    volumes:
+      # Mount the source code directory into the container
+      - ./server:/app
+      # Do not mount node_modules; use the ones installed in the container
+      - /app/node_modules
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./server/.env # Load environment variables from the .env file
+    depends_on:
+      - mongo # The server won't start until the database is ready
+
+  # --- Frontend Client Service (for development) ---
+  client:
+    build:
+      context: ./client
+    command: npm run dev -- --host # `--host` exposes it outside the container
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      # Crucial: The client inside Docker needs to talk to the 'server' service, not 'localhost'
+      - VITE_API_URL=http://server:5001/api
+    depends_on:
+      - server
+
+  # --- MongoDB Database Service ---
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db # Persist database data across restarts
+
+volumes:
+  mongodb_data: # Define the named volume
+    driver: local # Use the local driver for the volume

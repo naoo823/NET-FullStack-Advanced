@@ -1,0 +1,65 @@
+.aurora-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  overflow: hidden;
+}
+
+.aurora-background::before,
+.aurora-background::after {
+  content: '';
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  opacity: 0.3;
+  filter: blur(100px);
+  will-change: transform;
+}
+
+.aurora-background::before {
+  background: radial-gradient(circle, #00f5c3, transparent 60%);
+  top: -20%;
+  left: -20%;
+  animation: move-aurora-1 25s infinite linear;
+}
+
+.aurora-background::after {
+  background: radial-gradient(circle, #6d28d9, transparent 60%);
+  bottom: -20%;
+  right: -20%;
+  animation: move-aurora-2 25s infinite linear reverse;
+}
+
+@keyframes move-aurora-1 {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(100px, 50px) rotate(180deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes move-aurora-2 {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-100px, -50px) rotate(180deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+.aurora-background {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden;
+}
+.aurora-background::before, .aurora-background::after {
+  content: ''; position: absolute; width: 800px; height: 800px; border-radius: 50%; opacity: 0.3; filter: blur(100px); will-change: transform;
+}
+.aurora-background::before {
+  background: radial-gradient(circle, #00f5c3, transparent 60%); top: -20%; left: -20%; animation: move-aurora-1 25s infinite linear;
+}
+.aurora-background::after {
+  background: radial-gradient(circle, #6d28d9, transparent 60%); bottom: -20%; right: -20%; animation: move-aurora-2 25s infinite linear reverse;
+}
+@keyframes move-aurora-1 {
+  0% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(100px, 50px) rotate(180deg); } 100% { transform: translate(0, 0) rotate(360deg); }
+}
+@keyframes move-aurora-2 {
+  0% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(-100px, -50px) rotate(180deg); } 100% { transform: translate(0, 0) rotate(360deg); }
+}

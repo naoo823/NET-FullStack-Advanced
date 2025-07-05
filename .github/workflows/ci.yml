@@ -1,0 +1,57 @@
+# Name of the workflow
+name: Continuous Integration (CI)
+
+# When this workflow should run
+on:
+  push:
+    branches:
+      - main  # Run on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Run on pull requests targeting the main branch
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This job is named 'test-and-build'
+  test-and-build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Step 1: Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Use a specific Node.js version
+          cache: 'npm' # Cache npm dependencies to speed up subsequent runs
+
+      # Step 3: Install all dependencies for both client and server workspaces
+      - name: Install dependencies
+        run: npm install # This will install for root, client, and server due to workspaces
+
+      # Step 4: Run the build command for the client (frontend)
+      # This checks for any build errors in your React code
+      - name: Build Frontend
+        run: npm run build --workspace=client
+
+      # Step 5: Run the build command for the server (backend)
+      # (Optional but good practice if you use a build step like Babel or TypeScript)
+      # In our current JS setup, this step might not be necessary, but it's good to have.
+      # If you don't have a server build script, you can comment this out.
+      - name: Build Backend
+        run: echo "No build step for server yet."
+
+      # Step 6: Run linters (if you have them configured)
+      # Example: npm run lint --workspace=client && npm run lint --workspace=server
+      - name: Run Linters
+        run: echo "Linting checks would go here."
+
+      # Step 7: Run tests (if you have them set up)
+      # Example: npm test --workspace=client && npm test --workspace=server
+      - name: Run Tests
+        run: echo "Automated tests would go here."
